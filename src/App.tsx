@@ -1,13 +1,24 @@
 import React from "react";
-import logo from "./logo.svg";
+import logo from "./clar.png";
 import "./App.css";
 
 function AppHeader() {
   return (
-    <div>
-      <button id="removeSelected">❌ Remove Selected</button>
-      <input type="search" name="search" id="search" />
-    </div>
+    <header>
+      <div id="header-wrapper">
+        <div id="my-picture">
+          <img src={logo} alt="Selfie" />
+        </div>
+        <div>
+          <h1>Raul Reci</h1>
+          <h2 id="job-title">
+            Junior Frontend Developer
+            <span>@TEC:Agency</span>
+          </h2>
+        </div>
+      </div>
+      <MainMenu />
+    </header>
   );
 }
 
@@ -38,6 +49,29 @@ function MainMenu() {
   );
 }
 
+function ContentWrapper() {
+  return (
+    <section id="content">
+      <SideMenu />
+      <div id="main">
+        <div className="page" id="home">
+          Home content
+        </div>
+        <div className="page" id="skills">
+          <h2>Skills & Endorcements</h2>
+          <ul></ul>
+        </div>
+        <div className="page" id="projects">
+          Projects content
+        </div>
+        <div className="page" id="languages">
+          Languages content
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function SideMenu() {
   return (
     <div id="side-menu">
@@ -65,10 +99,9 @@ function AppFooter() {
 function App() {
   return (
     <div>
-      <AppHeader />;
-      <MainMenu />;
-      <SideMenu />;
-      <AppFooter />;
+      <AppHeader />
+      <ContentWrapper />
+      <AppFooter />
     </div>
   );
 }
