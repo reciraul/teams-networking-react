@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import "./style.css";
+
 export function AppFooter() {
   return (
     <footer>
-      <a>Linkedin</a>
+      <a href="#">Linkedin</a>
     </footer>
   );
 }

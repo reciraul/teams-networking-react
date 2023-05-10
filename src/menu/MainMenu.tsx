@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import "./menu.css";
 export function MainMenu() {
   return (
     <ul id="top-menu-bar">
