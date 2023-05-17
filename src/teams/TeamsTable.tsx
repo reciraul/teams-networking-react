@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React from "react";
 import "./style.css";
+import { deleteTeamRequest, getTeamsRequest } from "./middleware";
 
 type Team = {
   id: string;
@@ -15,9 +16,12 @@ type Props = {
   loading: boolean;
   teams: Team[];
 };
+type Actions = {
+  //deleteTeam: (id: string) => void;
+  deleteTeam(id: string): void;
+};
 
-export function TeamsTable(props: Props) {
-  console.warn("props", props);
+export function TeamsTable(props: Props & Actions) {
   return (
     <form id="editForm" action="" method="post" className={props.loading ? "loading-mask" : ""}>
       <table>
@@ -61,12 +65,15 @@ export function TeamsTable(props: Props) {
                   </a>
                 </td>
                 <td>
-                  <a data-id={"id"} className="link-btn remove-btn">
+                  <a
+                    className="link-btn"
+                    onClick={() => {
+                      props.deleteTeam(id);
+                    }}
+                  >
                     ✖
                   </a>
-                  <a data-id={"id"} className="link-btn edit-btn">
-                    &#9998;
-                  </a>
+                  <a className="link-btn">&#9998;</a>
                 </td>
               </tr>
             );
@@ -116,33 +123,31 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
 
   componentDidMount(): void {
     console.info("mount");
-    setTimeout(() => {
-      console.info("change loading");
-      //this.state.loading = false; // not working as is read-only
-      this.setState({
-        loading: false,
-        teams: [
-          {
-            id: "toze8j1610313009673",
-            promotion: "html",
-            members: "Nicolae Matei, HTML",
-            name: "Web Presentation",
-            url: "https://github.com/nmatei/web-intro-presentation"
-          },
-          {
-            id: "ezabnf1630345987541",
-            promotion: "css",
-            members: "Nicolae",
-            name: "Names",
-            url: "https://github.com/nmatei/nmatei.github.io"
-          }
-        ]
-      });
-    }, 2000);
+    this.loadTeams();
+  }
+
+  async loadTeams() {
+    const teams = await getTeamsRequest();
+    console.info("change loading", teams);
+    this.setState({
+      loading: false,
+      teams: teams
+    });
   }
 
   render() {
     console.warn("render");
-    return <TeamsTable teams={this.state.teams} loading={this.state.loading} />;
+    return (
+      <TeamsTable
+        teams={this.state.teams}
+        loading={this.state.loading}
+        deleteTeam={async id => {
+          console.warn("TODO pls remove this team", id);
+          const status = await deleteTeamRequest(id);
+          console.warn("status", status);
+          this.loadTeams();
+        }}
+      />
+    );
   }
 }

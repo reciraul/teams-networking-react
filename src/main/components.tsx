@@ -7,7 +7,7 @@ export function ContentWrapper() {
       <SideMenu />
       <div id="main">
         <div className="page" id="home">
-          Home content
+          HOME content...
         </div>
         <div className="page" id="skills">
           <h2>Skills & Endorcements</h2>
@@ -17,7 +17,7 @@ export function ContentWrapper() {
           <TeamsTableWrapper />
         </div>
         <div className="page" id="languages">
-          Languages content
+          Languages content...
         </div>
       </div>
     </section>
